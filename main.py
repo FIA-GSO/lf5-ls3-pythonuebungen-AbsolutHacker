@@ -7,13 +7,47 @@ def compute_r2d2_population(steps: int) -> tuple[int,int,int]:
     """
         Computes the r2d2 population for the given step amount
     :param steps: amount of steps to compute the population (e.g.: 5)
-    :return: tuple of childs adults and old r2d2
+    :return: tuple of children, adults, and old r2d2s
     """
-    return (0,0,0)
+    population = (10, 10, 10)
+    while steps > 0:
+        population = population_step(population)
+        steps -= 1
+    return population
+
+def population_step(population: tuple[int, int, int]) -> tuple[int, int, int]:
+    young = population[1] * 4 + population[2] * 2
+    adult = population[0] // 2
+    old = population[1] // 3
+    return (young, adult, old)
 
 #---------------------Aufgabe 2 Streichholz------------------------------
-#IMPLEMENT YOUR SOLUTION FOR THE STEICHHOLZSPIEL HERE
+#IMPLEMENT YOUR SOLUTION FOR THE STREICHHOLZSPIEL HERE
+def player_draw(num_matches):
+    print()
+    _input = int(input(f"There are {num_matches} matches left. How many do you draw? "))
+    if _input > 0 and _input <= min(6, num_matches):
+        return _input
+    else:
+        print("*** ERROR: Invalid draw! ***")
+        return player_draw(num_matches)
 
+def run_nim():
+    # player A draws
+    print(f"The computer drew 2 matches. There are 29 matches remaining.")
+    num_matches = 29
+    while num_matches > 0:
+        # player B draws
+        _player_draw = player_draw(num_matches)
+        num_matches -= _player_draw
+        print(f"You drew {_player_draw} matches. There are {num_matches} matches remaining.")
+        if num_matches == 0:
+            break
+        # player A draws
+        npc_draw = 7 - _player_draw
+        num_matches -= npc_draw
+        print(f"The computer drew {npc_draw} matches. There are {num_matches} matches remaining.")
+    print("You lost!")
 
 #---------------------Aufgabe 3 Heron ------------------------------------
 def heron_verfahren(area : float, threshold:float) -> float:
@@ -46,7 +80,7 @@ if __name__ == '__main__':
     # print (compute_r2d2_population(5))
 
     # Aufgabe 2
-    # TO BE IMPLEMENTED
+    run_nim()
 
     # Aufgabe 3
     print (f"Die Wurzel für die Fläche 25 und Grenze 0.01 nach Heron ist: {heron_verfahren(25, 0.01)}")
