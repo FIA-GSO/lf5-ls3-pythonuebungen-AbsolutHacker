@@ -50,6 +50,17 @@ def run_nim():
     print("You lost!")
 
 #---------------------Aufgabe 3 Heron ------------------------------------
+def abweichung(a: float, b: float) -> float:
+    return abs(a - b)
+
+def mittelwert(a: float, b: float) -> float:
+    return (a + b) / 2
+
+def heron_step(x: float, a: float, b: float) -> tuple[float, float]:
+    a = mittelwert(a, b)
+    b = x / a
+    return (a, b)
+
 def heron_verfahren(area : float, threshold:float) -> float:
     """
         computes the square root using the heron method
@@ -57,13 +68,20 @@ def heron_verfahren(area : float, threshold:float) -> float:
     :param threshold: threshold for the heron method e.g. 0.01
     :return:the square root of the given area according to the heron method
     """
-
-    return 0
+    laenge_a, laenge_b = area, 1.0
+    while abweichung(laenge_a, laenge_b) >= threshold:
+        laenge_a, laenge_b = heron_step(area, laenge_a, laenge_b)
+    return laenge_a
 
 
 #---------------------Aufgabe 4 Quersumme------------------------------
 #IMPLEMENT, IF NECESSARY, EXERCISE 4 HERE BUT USE A FUNCTION!
-
+def digit_sum(numerator: int) -> int:
+    sum = 0
+    while numerator > 0:
+        sum += (numerator % 10)
+        numerator //= 10
+    return sum
 
 #---------------MANAGEMENT----------------------
 #-------------COMMENT/UNCOMMENT lines to launch the different exercises
@@ -86,7 +104,8 @@ if __name__ == '__main__':
     print (f"Die Wurzel für die Fläche 25 und Grenze 0.01 nach Heron ist: {heron_verfahren(25, 0.01)}")
 
     # Aufgabe 4
-    # TO BE IMPLEMENTED
+    number = int(input("Geben Sie eine ganze Zahl ein: "))
+    print(f"Die Quersumme der Zahl {number} ist {digit_sum(number)}.")
 
     # Use a breakpoint in the code line below to debug your script.
 
