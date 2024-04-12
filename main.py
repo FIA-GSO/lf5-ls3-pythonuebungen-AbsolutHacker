@@ -16,6 +16,10 @@ def compute_r2d2_population(steps: int) -> tuple[int,int,int]:
     return population
 
 def population_step(population: tuple[int, int, int]) -> tuple[int, int, int]:
+    """
+    :param population: tuple of (young, adult, old) r2d2s
+    :return: tuple of (young, adult, old) r2d2s after applying reproduction and aging
+    """
     young = population[1] * 4 + population[2] * 2
     adult = population[0] // 2
     old = population[1] // 3
